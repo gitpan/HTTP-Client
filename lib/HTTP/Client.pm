@@ -5,9 +5,8 @@ use strict;
 use warnings;
 use Carp;
 use HTTP::Lite;
-##HTTP::Client
 
-our $VERSION = '1.43';
+our $VERSION = '1.52';
 
 #array of headers sendable for requests.
 
@@ -32,7 +31,6 @@ sub get {
    my $self = shift;
    my $uri = shift;
    $uri =~ s/#//; #get rid of fragment, according to RFC 2616
-   $uri .= "/" unless ($uri =~ m#/$#); #add slash.
    my $request = $http->request($uri) or croak "Can't get $uri; may be a result of a bad hostname: $!"; #get it.
    
    my $fullmessage = $http->status . ' ' . $http->status_message; #full status message.
@@ -40,13 +38,6 @@ sub get {
    return $http->body if ($http->body and $fullmessage =~ /200 OK/);
    #return the message if the message isn't 200 OK, and there is no body.
    return $fullmessage unless ($fullmessage eq '200 OK' and $http->body);
-   
-   unless (-e $file) {
-      open(FILE, ">$file");
-      print FILE $http->body;
-   } else {
-      carp "Won't overwrite existing $file!";
-   }
 }
       
 
@@ -103,14 +94,14 @@ __END__
 
 =head1 NAME
 
-HTTP::Client - Class for creating HTTP clients.
+HTTP::Client - Class for making HTTP requests
 
 =head1 SYNOPSIS
 
   use HTTP::Client;
   
-  my $client = HTTP::Client->new();
-  my $site   = $client->get("http://www.cpan.org");
+  my $client  = HTTP::Client->new();
+  my $site    = $client->get("http://www.cpan.org");
   my @headers = $client->response_headers;
   my $agent   = $client->agent;
   print $agent . "\n";
@@ -131,8 +122,7 @@ get HTTP response headers and get documents.
 
 =item new
 
-this is the constructor
-for HTTP::Client.
+This is the constructor for HTTP::Client.
 It can be called like this:
 
    my $client = HTTP::Client->new;
@@ -313,7 +303,6 @@ returns the Host header returned by the server.
 
 a real world example for getting documents would be:
 
-
  use HTTP::Client;
  my $client = HTTP::Client->new("GetBot/1.0");
  my $url = shift || <STDIN>;
@@ -332,11 +321,13 @@ L<HTTP::Lite>, L<LWP::UserAgent>
 
 =head1 AUTHOR
 
+As of 1.52, this module is now maintained by Neil Bowers E<lt>neilb@cpan.orgE<gt>.
+
 Nightcat, E<lt>nightcat@crocker.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by <nightcat>
+Copyright (C) 2005 by E<lt>nightcatE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.6 or,
