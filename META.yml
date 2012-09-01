@@ -1,13 +1,13 @@
 ---
 abstract: 'Class for making HTTP requests'
 author:
-  - 'Nightcat <nightcat@crocker.com>'
+  - 'Lincoln Ombelets <lincdog85@gmail.com>'
 build_requires:
   ExtUtils::MakeMaker: 0
 configure_requires:
   ExtUtils::MakeMaker: 0
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150'
+generated_by: 'ExtUtils::MakeMaker version 6.6302, CPAN::Meta::Converter version 2.120630'
 license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -20,4 +20,4 @@ no_index:
 requires:
   Carp: 0
   HTTP::Lite: 0
-version: 1.52
+version: 1.53
