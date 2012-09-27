@@ -20,4 +20,4 @@ no_index:
 requires:
   Carp: 0
   HTTP::Lite: 0
-version: 1.53
+version: 1.54
