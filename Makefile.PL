@@ -15,6 +15,8 @@ WriteMakefile(
     PREREQ_PM         => {
                           'HTTP::Lite' => 0,
                           'Carp'       => 0,
+                          'strict'     => 0,
+                          'warnings'   => 0,
                          },
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/HTTP/Client.pm', # retrieve abstract from module
@@ -23,6 +25,11 @@ WriteMakefile(
     ($mm_ver >= 6.31
         ? (LICENSE => 'perl')
         : ()),
+
+    ($mm_ver >= 6.48
+        ? (MIN_PERL_VERSION => 5.006)
+        : ()
+    ),
 
     ($mm_ver <= 6.45
         ? ()
@@ -37,6 +44,14 @@ WriteMakefile(
                 },
             },
           })
+    ),
+
+    ($mm_ver >= 6.64
+        ? (TEST_REQUIRES => {
+                'LWP::Online' => 0,
+                'Test::More'  => 0.88,
+          })
+        : ()
     ),
 
 );
