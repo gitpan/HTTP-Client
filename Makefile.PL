@@ -7,17 +7,26 @@ if ($mm_ver =~ /_/) { # dev version
     die $@ if $@;
 }
 
+my @REQUIRES = (
+    'HTTP::Lite' => 0,
+    'Carp'       => 0,
+    'strict'     => 0,
+    'warnings'   => 0,
+);
+
+my @TEST_REQUIRES = (
+    'LWP::Online' => 0,
+    'Test::More'  => 0.88,
+);
+
+push(@REQUIRES, @TEST_REQUIRES) if $mm_ver < 6.64;
+
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
     NAME              => 'HTTP::Client',
     VERSION_FROM      => 'lib/HTTP/Client.pm', # finds $VERSION
-    PREREQ_PM         => {
-                          'HTTP::Lite' => 0,
-                          'Carp'       => 0,
-                          'strict'     => 0,
-                          'warnings'   => 0,
-                         },
+    PREREQ_PM         => { @REQUIRES },
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/HTTP/Client.pm', # retrieve abstract from module
        AUTHOR         => 'Lincoln Ombelets <lincdog85@gmail.com>') : ()),
@@ -47,10 +56,7 @@ WriteMakefile(
     ),
 
     ($mm_ver >= 6.64
-        ? (TEST_REQUIRES => {
-                'LWP::Online' => 0,
-                'Test::More'  => 0.88,
-          })
+        ? (TEST_REQUIRES => { @TEST_REQUIRES })
         : ()
     ),
 

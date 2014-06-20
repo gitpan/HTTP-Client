@@ -1,5 +1,10 @@
 Revision history for Perl module HTTP::Client
 
+1.57 2014-06-20
+    - If you're running an old version of ExtUtils::MakeMaker, we put
+      the TEST_REQUIRES into PREREQ_PM. Had a couple of CPAN Testers
+      failures from setups running EU::MM < 6.64.
+
 1.56 2014-02-04
 
     - Moved testsuite (such as it is) into t/,
